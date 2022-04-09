@@ -21,14 +21,12 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String code;
 
     @Column(nullable = false)
     private String courseName;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Grade grade;
 
     @Override
     public boolean equals(Object o) {

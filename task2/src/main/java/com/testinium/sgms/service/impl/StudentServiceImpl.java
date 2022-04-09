@@ -7,6 +7,7 @@ import com.testinium.sgms.dto.response.CourseResponse;
 import com.testinium.sgms.dto.response.GenericStudentResponse;
 import com.testinium.sgms.dto.response.GradeResponse;
 import com.testinium.sgms.dto.response.StudentResponse;
+import com.testinium.sgms.entity.Grade;
 import com.testinium.sgms.entity.Student;
 import com.testinium.sgms.entity.StudentCourses;
 import com.testinium.sgms.repository.CourseRepository;
@@ -36,11 +37,11 @@ public class StudentServiceImpl implements StudentService {
                 .studentId(student.getStudentId())
                 .courseResponse(CourseResponse.builder()
                         .courseCode(courseCode.getCode())
-                        .courseName(courseCode.getCourseName())
-                        .response(GradeResponse.builder().midterm(50.5)
-                                .finalExam(75.0)
-                                .averageExam(80.0)
-                                .schoolYear(courseCode.getGrade().getYear())
+                        .schoolYear(student.getYear())
+                        .response(GradeResponse.builder()
+                                .midterm(student.getGrade().getMidterm())
+                                .finalExam(student.getGrade().getFinalExam())
+                                .averageExam(student.getGrade().getAverageExam())
                                 .build())
                         .build())
                 .build();
@@ -49,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentResponse> getAllStudentsGrades() {
-        var student = studentRepository.findAll();
+        var student = studentCoursesRepository.findAll();
         return student.stream()
                 .map(student1 -> {
                     var studentRequest = StudentRequest.builder()
@@ -74,12 +75,17 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentResponse assign(StudentCoursesRequest studentCourses) {
-
         var student = studentRepository.findByStudentId(studentCourses.getStudentId());
         var course = courseRepository.findByCode(studentCourses.getCourseCode());
         var saveCourse = StudentCourses.builder()
-                .courseCode(course.getCode())
                 .studentId(student.getStudentId())
+                .courseCode(course.getCode())
+                .year(studentCourses.getSchoolYear())
+                .grade(Grade.builder()
+                        .midterm(0.0)
+                        .finalExam(0.0)
+                        .averageExam(0.0)
+                        .build())
                 .build();
         return modelMapper.map(studentCoursesRepository.save(saveCourse), StudentResponse.class);
 

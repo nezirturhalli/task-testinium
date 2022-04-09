@@ -25,6 +25,17 @@ public class StudentCourses {
     @Column(nullable = false)
     private String courseCode;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SchoolYear year = SchoolYear.ACTIVE;
+
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "student_courses_grade",
+            joinColumns = @JoinColumn(name = "student_courses_id"),
+            inverseJoinColumns = @JoinColumn(name = "grade_id"))
+    private Grade grade;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

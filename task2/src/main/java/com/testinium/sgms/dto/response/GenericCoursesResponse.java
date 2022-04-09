@@ -13,5 +13,4 @@ import lombok.NoArgsConstructor;
 public class GenericCoursesResponse {
     private String courseCode;
     private String courseName;
-    private SchoolYear year;
 }
