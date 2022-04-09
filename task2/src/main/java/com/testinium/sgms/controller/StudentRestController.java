@@ -42,8 +42,8 @@ public class StudentRestController {
     }
 
     @GetMapping
-    public List<GenericStudentResponse> findAllStudents() {
-        return studentService.findAllStudents();
+    public List<GenericStudentResponse> getAllStudentsList() {
+        return studentService.getAllStudents();
     }
 
 }

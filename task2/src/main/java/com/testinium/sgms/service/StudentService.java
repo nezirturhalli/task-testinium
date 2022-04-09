@@ -15,7 +15,7 @@ public interface StudentService {
 
     List<StudentResponse> getAllStudentsGrades();
 
-    List<GenericStudentResponse> findAllStudents();
+    List<GenericStudentResponse> getAllStudents();
 
     GenericStudentResponse addNewStudent(AddStudentRequest studentRequest);
 
