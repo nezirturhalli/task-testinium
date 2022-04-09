@@ -35,9 +35,8 @@ public class Grade {
     @Column(name = "average_exam")
     private Double averageExam;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private SchoolYear year = SchoolYear.ACTIVE;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "grade")
+    private StudentCourses studentCourses;
 
 
     @Override
