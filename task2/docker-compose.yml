@@ -7,13 +7,18 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
       PGDATA: /data/postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - postgres:/data/postgres
     ports:
       - "5432:5432"
     networks:
       - postgres
-    restart: always
+    restart: unless-stopped
 
   pgadmin:
     container_name: pgadmin4
@@ -29,17 +34,18 @@ services:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
       - postgres
-    restart: always
+    restart: unless-stopped
 
-  API:
-   image: 'student-grade-management-system.jar'
-   depends_on:
-     - postgres
-   build: .
-   restart: on-failure
-   ports:
-    - "8080:8080"
-   environment:
+  app-sgms:
+    image: 'student-grade-management-system'
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    build: .
+    restart: on-failure
+    environment:
       SPRING_APPLICATION_JSON: '{
           "spring.datasource.url"  : "jdbc:postgresql://postgres:5432/db_SGMS?useSSL=false",
           "spring.datasource.username" : "root",
@@ -47,10 +53,10 @@ services:
           "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.PostgreSQLDialect",
           "spring.jpa.hibernate.ddl-auto" : "update"
         }'
-   volumes:
-        - .m2:/root/.m2
-   stdin_open: true
-   tty: true
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
 
 networks:
   postgres:
