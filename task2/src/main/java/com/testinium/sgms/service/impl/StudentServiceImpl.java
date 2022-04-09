@@ -7,6 +7,7 @@ import com.testinium.sgms.dto.response.CourseResponse;
 import com.testinium.sgms.dto.response.GenericStudentResponse;
 import com.testinium.sgms.dto.response.GradeResponse;
 import com.testinium.sgms.dto.response.StudentResponse;
+import com.testinium.sgms.entity.Course;
 import com.testinium.sgms.entity.Student;
 import com.testinium.sgms.entity.StudentCourses;
 import com.testinium.sgms.repository.CourseRepository;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
