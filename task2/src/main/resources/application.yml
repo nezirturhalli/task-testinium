@@ -1,0 +1,36 @@
+server:
+  port: 2200
+  error:
+    include-message: always
+  servlet:
+    context-path: /sgms
+
+spring:
+  mvc:
+    servlet:
+      path: /api/v1
+  application:
+    name: product
+  datasource:
+    username: root
+    password: root
+    url: jdbc:postgresql://localhost:5432/db_SGMS
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    properties:
+      hibarnate:
+        event:
+          merge:
+            entity_copy_observer: allow
+        format_sql: true
+        ddl-auto: update
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+# swagger-ui custom path
+# http://localhost:2200/sgms/api/v1/swagger-ui/index.html
