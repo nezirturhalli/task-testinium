@@ -91,6 +91,7 @@ public class DtoModelMapperConfig {
                             .midterm(context.getSource().getMidterm())
                             .finalExam(context.getSource().getFinalExam())
                             .averageExam(context.getSource().getAverageExam())
+                            .status(context.getSource().getStatus())
                             .build())
                     .build();
 

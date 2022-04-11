@@ -13,14 +13,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddGradeRequest {
+public class GenericGradeRequest {
 
     @NotBlank
     private String studentId;
-    @NotNull
-    private Double midterm;
-    @NotNull
-    private Double finalExam;
     @NotBlank
     private String courseCode;
     @NotNull
