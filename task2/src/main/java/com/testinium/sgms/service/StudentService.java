@@ -11,11 +11,9 @@ import java.util.List;
 public interface StudentService {
 
 
-        StudentResponse getStudentById(GenericGradeRequest request);
+    StudentResponse getStudentById(GenericGradeRequest request);
 
-
-        List<StudentResponse> getAllStudentsGrades();
-
+    List<StudentResponse> getAllStudentsGrades();
 
     List<GenericStudentResponse> getAllStudents();
 
