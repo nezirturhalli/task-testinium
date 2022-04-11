@@ -68,8 +68,7 @@ class CourseRestControllerTest {
     @CsvFileSource(resources = "course.csv")
     void addNewCourseShouldReturnOk(
             String courseCode,
-            String courseName,
-            String year
+            String courseName
     ) throws Throwable {
         var request = new AddCourseRequest();
         request.setCourseCode(courseCode);

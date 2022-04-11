@@ -1,8 +1,8 @@
 package com.testinium.sgms.service.impl;
 
 import com.testinium.sgms.dto.request.AddStudentRequest;
+import com.testinium.sgms.dto.request.GenericGradeRequest;
 import com.testinium.sgms.dto.request.StudentCoursesRequest;
-import com.testinium.sgms.dto.request.StudentRequest;
 import com.testinium.sgms.dto.response.CourseResponse;
 import com.testinium.sgms.dto.response.GenericStudentResponse;
 import com.testinium.sgms.dto.response.GradeResponse;
@@ -30,13 +30,13 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public StudentResponse getStudentById(StudentRequest studentRequest) {
-        var student = studentCoursesRepository.findByStudentId(studentRequest.getStudentId());
-        var courseCode = courseRepository.findByCode(student.getCourseCode());
+    public StudentResponse getStudentById(GenericGradeRequest request) {
+        var student = studentCoursesRepository.findByStudentIdAndCourseCodeAndYear(request.getStudentId(),
+                request.getCourseCode(), request.getYear());
         return StudentResponse.builder()
                 .studentId(student.getStudentId())
                 .courseResponse(CourseResponse.builder()
-                        .courseCode(courseCode.getCode())
+                        .courseCode(student.getCourseCode())
                         .schoolYear(student.getYear())
                         .response(GradeResponse.builder()
                                 .midterm(student.getGrade().getMidterm())
@@ -46,17 +46,20 @@ public class StudentServiceImpl implements StudentService {
                         .build())
                 .build();
 
+
     }
 
     @Override
     public List<StudentResponse> getAllStudentsGrades() {
         var student = studentCoursesRepository.findAll();
         return student.stream()
-                .map(student1 -> {
-                    var studentRequest = StudentRequest.builder()
-                            .studentId(student1.getStudentId())
+                .map(s -> {
+                    var request = GenericGradeRequest.builder()
+                            .studentId(s.getStudentId())
+                            .courseCode(s.getCourseCode())
+                            .year(s.getYear())
                             .build();
-                    return getStudentById(studentRequest);
+                    return getStudentById(request);
                 }).toList();
     }
 

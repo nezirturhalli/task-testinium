@@ -3,6 +3,7 @@ package com.testinium.sgms.service.impl;
 import com.testinium.sgms.dto.request.AddGradeRequest;
 import com.testinium.sgms.dto.response.AddGradeResponse;
 import com.testinium.sgms.entity.Grade;
+import com.testinium.sgms.entity.Status;
 import com.testinium.sgms.repository.GradeRepository;
 import com.testinium.sgms.service.GradeService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class GradeServiceImpl implements GradeService {
         grade.setMidterm(gradeRequest.getMidterm());
         grade.setFinalExam(gradeRequest.getFinalExam());
         grade.setAverageExam((gradeRequest.getMidterm() + gradeRequest.getFinalExam()) / 2);
+        grade.setStatus(((grade.getAverageExam() >= 50) ? Status.PASS : Status.FAIL));
         return modelMapper.map(gradeRepository.saveAndFlush(grade), AddGradeResponse.class);
 
     }

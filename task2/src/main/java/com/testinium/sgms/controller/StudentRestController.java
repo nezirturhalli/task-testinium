@@ -1,8 +1,8 @@
 package com.testinium.sgms.controller;
 
 import com.testinium.sgms.dto.request.AddStudentRequest;
+import com.testinium.sgms.dto.request.GenericGradeRequest;
 import com.testinium.sgms.dto.request.StudentCoursesRequest;
-import com.testinium.sgms.dto.request.StudentRequest;
 import com.testinium.sgms.dto.response.GenericStudentResponse;
 import com.testinium.sgms.dto.response.StudentResponse;
 import com.testinium.sgms.service.StudentService;
@@ -32,8 +32,8 @@ public class StudentRestController {
     }
 
     @PostMapping("/getOneStudentGrades")
-    public StudentResponse getOneStudentGrades(@RequestBody StudentRequest student) {
-        return studentService.getStudentById(student);
+    public StudentResponse getOneStudentGrades(@RequestBody GenericGradeRequest request) {
+        return studentService.getStudentById(request);
     }
 
     @GetMapping("/getAllStudentsGrades")

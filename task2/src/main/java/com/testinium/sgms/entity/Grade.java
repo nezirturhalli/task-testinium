@@ -35,6 +35,8 @@ public class Grade {
     @Column(name = "average_exam")
     private Double averageExam;
 
+    private Status status;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "grade")
     private StudentCourses studentCourses;
 
