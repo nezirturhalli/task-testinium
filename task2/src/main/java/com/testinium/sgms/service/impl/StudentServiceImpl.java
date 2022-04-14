@@ -42,6 +42,7 @@ public class StudentServiceImpl implements StudentService {
                                 .midterm(student.getGrade().getMidterm())
                                 .finalExam(student.getGrade().getFinalExam())
                                 .averageExam(student.getGrade().getAverageExam())
+                                .status(student.getGrade().getStatus())
                                 .build())
                         .build())
                 .build();
@@ -90,7 +91,7 @@ public class StudentServiceImpl implements StudentService {
                         .averageExam(0.0)
                         .build())
                 .build();
-        return modelMapper.map(studentCoursesRepository.save(saveCourse), StudentResponse.class);
+        return modelMapper.map(studentCoursesRepository.saveAndFlush(saveCourse), StudentResponse.class);
 
 
     }
